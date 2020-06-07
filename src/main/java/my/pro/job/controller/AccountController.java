@@ -20,7 +20,7 @@ import my.pro.job.service.AccountService;
  */
 
 @RestController
-@RequestMapping("/job")
+@RequestMapping("/my/pro/job/account")
 public class AccountController {
 	
 	@Autowired
@@ -29,7 +29,7 @@ public class AccountController {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	@PostMapping("/account")
+	@PostMapping()
 	@ResponseStatus(HttpStatus.CREATED)
 	public Account saveAccount(@RequestBody AccountDTO a) {
 		return accountService.saveAccount(

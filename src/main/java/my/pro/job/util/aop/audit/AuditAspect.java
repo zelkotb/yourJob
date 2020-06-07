@@ -33,7 +33,7 @@ public class AuditAspect {
 	@Transactional
 	private void doAudit(JoinPoint joinpoint, Auditable auditable) {
 		String username = "my username";
-		String ipAddress = request.getLocalAddr();
+		String ipAddress = request.getRemoteAddr();
 		String modificationDateTime = LocalDateTime.now().toString();
 		System.out.println(modificationDateTime);
 		String action = auditable.action();
