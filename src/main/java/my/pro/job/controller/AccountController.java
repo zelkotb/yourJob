@@ -3,6 +3,7 @@ package my.pro.job.controller;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +32,7 @@ public class AccountController {
 
 	@PostMapping()
 	@ResponseStatus(HttpStatus.CREATED)
+	@PreAuthorize("hasAuthority('RECRUTER')")
 	public Account saveAccount(@RequestBody AccountDTO a) {
 		return accountService.saveAccount(
 				this.modelMapper

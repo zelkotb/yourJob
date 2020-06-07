@@ -2,23 +2,54 @@ package my.pro.job.dto;
 
 public class ExceptionDTO {
 
+	private String timestamp;
+	private int status;
+	private String error;
 	private String message;
-	private String date;
+	private String path;
+	
 	public ExceptionDTO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
+
+	public String getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(String timestamp) {
+		this.timestamp = timestamp;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public String getError() {
+		return error;
+	}
+
+	public void setError(String error) {
+		this.error = error;
+	}
+
 	public String getMessage() {
 		return message;
 	}
+
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public String getDate() {
-		return date;
+
+	public String getPath() {
+		return path;
 	}
-	public void setDate(String date) {
-		this.date = date;
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 	
 }

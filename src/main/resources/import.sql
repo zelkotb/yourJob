@@ -1,5 +1,5 @@
 INSERT INTO account (username, password, email, recruter_id, candidate_id) VALUES ('zelkotb','password','zelkot@gmail.com', null, 1);
-INSERT INTO account (username, password, email, recruter_id, candidate_id) VALUES ('yattaki','password','yattaki@gmail.com', 2, null);
+INSERT INTO account (username, password, email, recruter_id, candidate_id) VALUES ('yattaki','password','yattaki@gmail.com', 1, null);
 
 INSERT INTO application (date,application_status,candidate,offer) VALUE ('2019-12-01','WAITING',1,1);
 
@@ -23,7 +23,7 @@ INSERT INTO mission (title,description,experience) VALUE ('projet SPRINT','autom
 
 INSERT INTO offer (title,description,profil,recruter,company,city) VALUE ('Developpeur fullStack js','on est a la recherche d"un développeur FullStavk pour une mission pour notre client ABB','BANKING',2,1,1);
 
-INSERT INTO role (role) VALUES ('recruter'),('candidate'),('admin');
+INSERT INTO role (role) VALUES ('RECRUTER'),('CANDIDATE'),('ADMIN');
 
 INSERT INTO school (name,school_type,city) VALUE ('INPT','INSTITUTE',1);
 

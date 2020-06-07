@@ -53,7 +53,7 @@ public class JWTProvider {
 		Jws<Claims> parsedJwt =parseJwt(jwt, secret);
 		if(!isExpired(parsedJwt.getBody().getExpiration())) return true;
 		else {
-			throw new ServletException("the token has expired");
+			throw new SignatureException("the token has expired");
 		}
 	}
 	
