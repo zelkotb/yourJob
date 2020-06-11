@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import my.pro.job.enumeration.SchoolType;
 /**
@@ -20,6 +21,7 @@ import my.pro.job.enumeration.SchoolType;
  *
  */
 @Entity
+@Table(name = "school")
 public class School {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)

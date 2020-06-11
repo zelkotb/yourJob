@@ -1,6 +1,7 @@
 package my.pro.job.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,6 +21,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
+	@Value("${security.public.endpoint}")
+	private String[] public_endpoint;
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
@@ -46,6 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		http.csrf().disable();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.authorizeRequests().antMatchers("/my/pro/job/authenticate").permitAll();
+		http.authorizeRequests().antMatchers(public_endpoint).permitAll();
 		http.authorizeRequests().anyRequest().authenticated();
 		http.addFilterBefore(authorizationFilter,UsernamePasswordAuthenticationFilter.class);
 	}

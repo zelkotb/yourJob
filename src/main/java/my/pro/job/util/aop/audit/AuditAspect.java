@@ -11,6 +11,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 /**
  * 
@@ -32,10 +33,10 @@ public class AuditAspect {
 	@After("@annotation(auditable)")
 	@Transactional
 	private void doAudit(JoinPoint joinpoint, Auditable auditable) {
-		String username = "my username";
+		String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+		String username = currentUsername.equals("anonymousUser") ? "Anonymous" : currentUsername;
 		String ipAddress = request.getRemoteAddr();
 		String modificationDateTime = LocalDateTime.now().toString();
-		System.out.println(modificationDateTime);
 		String action = auditable.action();
 		String description = "";
 		Object[] args = joinpoint.getArgs();

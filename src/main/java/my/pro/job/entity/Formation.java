@@ -4,14 +4,13 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
@@ -24,6 +23,7 @@ import my.pro.job.enumeration.FormationType;
  *
  */
 @Entity
+@Table(name = "formation")
 public class Formation {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,12 +35,10 @@ public class Formation {
 	@Column(name = "end_date")
 	private Date endDate;
 	@Column(name = "formation_type")
-	@Enumerated(EnumType.STRING)
 	private FormationType formationType; //engineer master..?
 	@Size(min = 50, max = 255)
 	@Lob
 	private String description;
-	@Enumerated(EnumType.STRING)
 	private Diploma diploma; //engineer bac+5 ...?
 	@ManyToOne()
 	@JoinColumn(name = "school")

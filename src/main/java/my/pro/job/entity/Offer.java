@@ -13,6 +13,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import my.pro.job.enumeration.Profil;
@@ -22,6 +23,7 @@ import my.pro.job.enumeration.Profil;
  *
  */
 @Entity
+@Table(name = "offer")
 public class Offer {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -14,10 +14,13 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5Dialect
+
 server:
   port: 9000
 
 security:
+  public:
+    endpoint: /my/pro/job/api-docs/**,/my/pro/job/swagger-ui/**
   jwt:
     secret: secret
 
@@ -28,3 +31,10 @@ security:
 #spring.mail.password=YourPassword
 #spring.mail.properties.mail.smtp.auth=true
 #spring.mail.properties.mail.smtp.starttls.enable=true
+
+springdoc:
+  swagger-ui:
+    path: /my/pro/job/swagger-ui
+  api-docs:
+    path: /my/pro/job/api-docs
+    

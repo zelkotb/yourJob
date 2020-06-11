@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.HandlerMapping;
 
@@ -31,6 +32,7 @@ public class ControllerExceptionHandler {
 	private HttpServletRequest request;
 	
 	@ExceptionHandler(CustomException.class)
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	public ResponseEntity<?> customExceptionHandler(CustomException customException){
 		LOG.error("unxpected error has happend ",customException.getCause());
 		ExceptionDTO exceptionDTO = initExceptionDTO(customException, customException.getMessage(), 400, "Bad Request");
@@ -38,6 +40,7 @@ public class ControllerExceptionHandler {
 	}
 	
 	@ExceptionHandler(AccessDeniedException.class)
+	@ResponseStatus(code = HttpStatus.UNAUTHORIZED)
 	public ResponseEntity<?> accessDeniedException(AccessDeniedException exception){
 		LOG.error("unxpected error has happend ",exception);
 		ExceptionDTO exceptionDTO = initExceptionDTO(exception, exception.getMessage(), 403, "Forbidden");
@@ -45,6 +48,7 @@ public class ControllerExceptionHandler {
 	}
 	
 	@ExceptionHandler(AuthenticationException.class)
+	@ResponseStatus(code = HttpStatus.FORBIDDEN)
 	public ResponseEntity<?> authenticationException(AuthenticationException exception){
 		LOG.error("unxpected error has happend ",exception);
 		ExceptionDTO exceptionDTO = initExceptionDTO(exception, exception.getMessage(), 403, "Forbidden");
@@ -52,6 +56,7 @@ public class ControllerExceptionHandler {
 	}
 	
 	@ExceptionHandler(JwtException.class)
+	@ResponseStatus(code = HttpStatus.FORBIDDEN)
 	public ResponseEntity<?> jwtException(JwtException exception){
 		LOG.error("unxpected error has happend ",exception);
 		ExceptionDTO exceptionDTO = initExceptionDTO(exception, exception.getMessage(), 403, "Forbidden");
@@ -60,6 +65,7 @@ public class ControllerExceptionHandler {
 	
 	
 	@ExceptionHandler(Exception.class)
+	@ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
 	public ResponseEntity<?> exception(Exception exception){
 		LOG.error("unxpected error has happend ",exception);
 		ExceptionDTO exceptionDTO = initExceptionDTO(exception,"Internal Error", 500, "Internal Server error");

@@ -7,12 +7,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 /**
  * 
  * @author Elkotb Zakaria
  *
  */
-@Entity
+@Entity@Table(name = "language")
 public class Language {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)

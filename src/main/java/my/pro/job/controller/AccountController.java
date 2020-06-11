@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import my.pro.job.dto.AccountDTO;
 import my.pro.job.entity.Account;
 import my.pro.job.service.AccountService;
@@ -33,6 +35,7 @@ public class AccountController {
 	@PostMapping()
 	@ResponseStatus(HttpStatus.CREATED)
 	@PreAuthorize("hasAuthority('RECRUTER')")
+	@Operation(security = {@SecurityRequirement(name = "Bearer Token")})
 	public Account saveAccount(@RequestBody AccountDTO a) {
 		return accountService.saveAccount(
 				this.modelMapper

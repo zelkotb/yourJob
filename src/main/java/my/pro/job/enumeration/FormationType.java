@@ -5,12 +5,21 @@ package my.pro.job.enumeration;
  *
  */
 public enum FormationType {
-	TELECOM,
-	DATASCIENCE,
-	MANAGEMENT,
-	COMPUTERSCIENCE,
-	MEQUANIC,
-	ELECTRONIC,
-	ELECTRIC,
-	EMBEDEDSYSTEM
+	TELECOM("TELECOM"),
+	DATASCIENCE("DATA SCIENCE"),
+	MANAGEMENT("MANAGEMENT"),
+	COMPUTERSCIENCE("COMPUTER SCIENCE"),
+	MEQUANIC("MEQUANIC"),
+	ELECTRONIC("ELECTRONIC"),
+	ELECTRIC("ELECTRIC"),
+	EMBEDEDSYSTEM("EMBEDED SYSTEM");
+	
+	private String type;
+	private FormationType(String type) {
+		this.type=type;
+	}
+	public String getType() {
+		return this.type;
+	}
+	
 }

@@ -9,17 +9,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 /**
  * 
  * @author Elkotb Zakaria
  *
  */
 @Entity
+@Table(name = "city")
 public class City {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String city;
+	private String name;
 	@OneToMany(mappedBy = "city")
 	private List<HR> recruters;
 	@OneToMany(mappedBy = "city")
@@ -46,10 +48,10 @@ public class City {
 		this.id = id;
 	}
 	public String getCity() {
-		return city;
+		return name;
 	}
-	public void setCity(String city) {
-		this.city = city;
+	public void setCity(String name) {
+		this.name = name;
 	}
 
 	public List<Offer> getOffers() {

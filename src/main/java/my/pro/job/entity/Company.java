@@ -9,12 +9,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 /**
  * 
  * @author Elkotb Zakaria
  *
  */
 @Entity
+@Table(name = "company")
 public class Company {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)

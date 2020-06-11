@@ -15,6 +15,7 @@ import my.pro.job.entity.Account;
 import my.pro.job.repository.AccountRepository;
 import my.pro.job.security.JWTProvider;
 import my.pro.job.service.AuthenticationService;
+import my.pro.job.util.aop.audit.Auditable;
 
 @Service
 public class AuthenticationImplService implements AuthenticationService{
@@ -29,6 +30,7 @@ public class AuthenticationImplService implements AuthenticationService{
 	private AccountRepository accountRepository;
 	
 	@Override
+	@Auditable(action = "autheticate user")
 	public String authenticateUser(AuthenticationDTO authenticationDTO) 
 			throws AuthenticationException{
 		authenticationManger

@@ -12,6 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -22,6 +23,7 @@ import my.pro.job.enumeration.Profil;
  *
  */
 @Entity
+@Table(name = "candidate")
 public class Candidate extends Person{
 
 	@OneToMany(mappedBy = "candidate")

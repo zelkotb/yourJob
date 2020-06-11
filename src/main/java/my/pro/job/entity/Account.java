@@ -13,7 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.Pattern;
+import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,37 +22,26 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import my.pro.job.util.aop.audit.AuditEntity;
 
-/*
-	^                 # start-of-string
-(?=.*[0-9])       # a digit must occur at least once
-(?=.*[a-z])       # a lower case letter must occur at least once
-(?=.*[A-Z])       # an upper case letter must occur at least once
-(?=.*[@#$%^&+=])  # a special character must occur at least once
-(?=\S+$)          # no whitespace allowed in the entire string
-.{8,}             # anything, at least eight places though
-$                 # end-of-string
-
-*/
 /**
  * 
  * @author Elkotb Zakaria
  *
  */
 @Entity
+@Table(name="account") 
 public class Account extends AuditEntity{
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(nullable = false)
+	@Column(length = 50,nullable = false,unique = true)
 	@Size(min = 5)
 	private String username;
 	@JsonProperty(access = Access.WRITE_ONLY)
 	@Column(nullable = false)
 	@Size(min = 8)
-	//@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$")
 	private String password;
-	@Column(nullable = false)
-	//@Pattern(regexp = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6}$")
+	@Column(length = 50,nullable = false, unique = true)
+	@Email
 	private String email;
 	
 	/**
