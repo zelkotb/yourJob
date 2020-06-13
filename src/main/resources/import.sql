@@ -1,5 +1,5 @@
-INSERT INTO account (username, password, email, recruter_id, candidate_id) VALUES ('zelkotb','password','zelkot@gmail.com', null, 1);
-INSERT INTO account (username, password, email, recruter_id, candidate_id) VALUES ('yattaki','password','yattaki@gmail.com', 1, null);
+INSERT INTO account (username, password, email, recruter_id, candidate_id) VALUES ('zelkotb','Password1*','zelkot@gmail.com', null, 1);
+INSERT INTO account (username, password, email, recruter_id, candidate_id) VALUES ('yattaki','Password1*','yattaki@gmail.com', 1, null);
 
 INSERT INTO application (date,application_status,candidate,offer) VALUE ('2019-12-01','WAITING',1,1);
 

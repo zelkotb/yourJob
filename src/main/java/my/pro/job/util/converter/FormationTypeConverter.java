@@ -6,7 +6,11 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 import my.pro.job.enumeration.FormationType;
-
+/**
+ * 
+ * @author Elkotb Zakaria
+ *
+ */
 @Converter(autoApply = true)
 public class FormationTypeConverter implements AttributeConverter<FormationType, String>{
 

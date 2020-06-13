@@ -29,7 +29,7 @@ import my.pro.job.util.aop.audit.AuditEntity;
  */
 @Entity
 @Table(name="account") 
-public class Account extends AuditEntity{
+public class Account implements AuditEntity{
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

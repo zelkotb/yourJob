@@ -6,7 +6,11 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 import my.pro.job.enumeration.Diploma;
-
+/**
+ * 
+ * @author Elkotb Zakaria
+ *
+ */
 @Converter(autoApply = true)
 public class DiplomaConverter implements AttributeConverter<Diploma, String>{
 

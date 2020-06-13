@@ -4,7 +4,7 @@ package my.pro.job.util.aop.audit;
  * @author Elkotb Zakaria
  *
  */
-public abstract class AuditEntity {
+public interface AuditEntity {
 
 	/**
 	 * for supplementary information about the Entity

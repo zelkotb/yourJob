@@ -14,6 +14,7 @@ import javax.persistence.TemporalType;
 
 import my.pro.job.enumeration.Nationality;
 import my.pro.job.enumeration.Situation;
+import my.pro.job.util.validators.Phone;
 /**
  * 
  * @author Elkotb Zakaria
@@ -28,6 +29,7 @@ public class Person {
 	@Column(name = "last_name")
 	private String lastName;
 	@Column(name = "phone_number")
+	@Phone
 	private String phoneNumber;
 	@Temporal(TemporalType.DATE)
 	private Date birthday;

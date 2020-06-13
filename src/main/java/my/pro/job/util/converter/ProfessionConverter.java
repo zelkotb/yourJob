@@ -6,7 +6,11 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 import my.pro.job.enumeration.Profession;
-
+/**
+ * 
+ * @author Elkotb Zakaria
+ *
+ */
 @Converter(autoApply = true)
 public class ProfessionConverter implements AttributeConverter<Profession, String>{
 
