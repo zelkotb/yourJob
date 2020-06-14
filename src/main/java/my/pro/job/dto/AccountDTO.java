@@ -1,4 +1,9 @@
 package my.pro.job.dto;
+
+import java.util.List;
+
+import my.pro.job.entity.Role;
+
 /**
  * 
  * @author Elkotb Zakaria
@@ -9,6 +14,7 @@ public class AccountDTO {
 	private String username;
 	private String email;
 	private String password;
+	private List<Role> roles;
 	
 	public String getUsername() {
 		return username;
@@ -31,6 +37,12 @@ public class AccountDTO {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public List<Role> getRoles() {
+		return roles;
+	}
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 	
 }

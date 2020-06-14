@@ -31,7 +31,6 @@ public class CustomUserDetailsImplService implements UserDetailsService{
 		List<GrantedAuthority> authorities = 
 				roles.stream()
 					.map(r->new SimpleGrantedAuthority(r.getRole()))
-					.peek(r->System.err.println(r.getAuthority()))
 					.collect(Collectors.toList());
 		return new User(account.getUsername(),account.getPassword(),authorities);
 	}

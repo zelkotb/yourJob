@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Congratulations Dear Client</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
+    <!-- use the font -->
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 48px;
+        }
+    </style>
+</head>
+ <body>
+ <div align="center">
+    <p style="color: black;">
+      You made a step toward in your brilliant <b>career</b> ☀️ and today is your <b>career</b>'s birthday:
+      <b><span th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy')}"></span></b>
+    </p>
+    <p style="color: black;">You have created your first account in our platform<b style="padding: 5px;margin-left: 5px;color: white;border: 1px solid orange; background-color: orange;">YourJob</b></p>
+    	<p style="color: black;">To benefit from our service you need to use:</p>
+    		<p style="margin: 0px 0px 0px 50px; color: black;"><b>Login: </b><i th:text=${username}></i></p>
+    		<p style="margin: 0px 0px 0px 50px; color: black;"><b>Password: </b><i th:text=${password}></i></p>
+    </div>
+    <p style="color: black;">
+      Regards, <br />
+      <em th:text="${sign}"></em> 🤷
+      <p th:text="${location}"></p>
+    </p>
+  </body>
+</html>

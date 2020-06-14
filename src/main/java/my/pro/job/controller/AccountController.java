@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,13 +33,19 @@ public class AccountController {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	@PostMapping()
+	@PostMapping("/register")
 	@ResponseStatus(HttpStatus.CREATED)
-	@PreAuthorize("hasAuthority('RECRUTER')")
-	@Operation(security = {@SecurityRequirement(name = "Bearer Token")})
-	public Account saveAccount(@RequestBody AccountDTO a) {
+	public Account register (@RequestBody AccountDTO a) {
 		return accountService.saveAccount(
 				this.modelMapper
 					.map(a, Account.class));
+	}
+	
+	@ResponseStatus(HttpStatus.OK)
+	@DeleteMapping
+	@PreAuthorize("hasAuthority('RECRUTER')")
+	@Operation(security = {@SecurityRequirement(name = "Bearer Token")})
+	public void deleteAccount() {
+		
 	}
 }
