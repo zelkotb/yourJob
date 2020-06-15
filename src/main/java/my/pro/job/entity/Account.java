@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -62,6 +63,10 @@ public class Account implements AuditEntity{
 		inverseJoinColumns = @JoinColumn(name = "role_id")
 			)
 	private List<Role> roles;
+	
+	@OneToOne(mappedBy = "account")
+	@JsonIgnore
+	private ResetPassword resetPassword;
 	
 	public Account() {
 		super();
@@ -118,6 +123,14 @@ public class Account implements AuditEntity{
 	@Override
 	public String auditDescription() {
 		return "email : "+email;
+	}
+
+	public ResetPassword getResetPassword() {
+		return resetPassword;
+	}
+
+	public void setResetPassword(ResetPassword resetPassword) {
+		this.resetPassword = resetPassword;
 	}
 
 }

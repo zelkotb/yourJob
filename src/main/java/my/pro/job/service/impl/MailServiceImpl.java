@@ -34,7 +34,7 @@ public class MailServiceImpl implements MailService{
                 StandardCharsets.UTF_8.name());
 		Context context = new Context();
         context.setVariables(mail.getProps());
-        String html = templateEngine.process("welcomMail", context);
+        String html = templateEngine.process(mail.getTemplate(), context);
 		helper.setFrom(mail.getFrom());
 		helper.setTo(mail.getTo());
 		helper.setSubject(mail.getSubject());

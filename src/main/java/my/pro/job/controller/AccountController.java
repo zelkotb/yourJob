@@ -1,5 +1,7 @@
 package my.pro.job.controller;
 
+import javax.mail.MessagingException;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,10 +37,16 @@ public class AccountController {
 
 	@PostMapping("/register")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Account register (@RequestBody AccountDTO a) {
+	public Account register (@RequestBody AccountDTO a) throws MessagingException {
 		return accountService.saveAccount(
 				this.modelMapper
 					.map(a, Account.class));
+	}
+	
+	@PostMapping("/reset")
+	@ResponseStatus(HttpStatus.CREATED)
+	public void reset (@RequestBody AccountDTO a) throws MessagingException {
+		accountService.reset(modelMapper.map(a, Account.class));
 	}
 	
 	@ResponseStatus(HttpStatus.OK)

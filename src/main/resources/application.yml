@@ -19,6 +19,8 @@ spring:
     port: 587
     username: ${email}
     password: ${emailPassword}
+    sign: YourJob Team
+    location: Casablanca
     properties:
       mail:
         smtp:
@@ -30,7 +32,7 @@ server:
 
 security:
   public:
-    endpoint: /my/pro/job/api-docs/**,/my/pro/job/swagger-ui/**,/my/pro/job/account/register
+    endpoint: /my/pro/job/api-docs/**,/my/pro/job/swagger-ui/**,/my/pro/job/account/register,/my/pro/job/account/reset
   jwt:
     secret: secret
 

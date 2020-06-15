@@ -43,7 +43,7 @@ public class ControllerExceptionHandler {
 	@ResponseStatus(code = HttpStatus.UNAUTHORIZED)
 	public ResponseEntity<?> accessDeniedException(AccessDeniedException exception){
 		LOG.error("unxpected error has happend ",exception);
-		ExceptionDTO exceptionDTO = initExceptionDTO(exception, exception.getMessage(), 403, "Forbidden");
+		ExceptionDTO exceptionDTO = initExceptionDTO(exception, exception.getMessage(), 401, "Forbidden");
 		return new ResponseEntity<>(exceptionDTO,HttpStatus.UNAUTHORIZED);
 	}
 	

@@ -1,8 +1,13 @@
 package my.pro.job.dto;
 
-import java.util.HashMap;
 import java.util.Map;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+
+
+@Builder
+@AllArgsConstructor
 public class MailDTO {
 
 	private String from;
@@ -10,7 +15,8 @@ public class MailDTO {
 	private String subject;
 	private String text;
 	private String img;
-	private Map<String, Object> props = new HashMap<String, Object>();
+	private String template;
+	private Map<String, Object> props;
 	
 	public String getImg() {
 		return img;
@@ -51,6 +57,12 @@ public class MailDTO {
 	}
 	public void setProps(Map<String, Object> props) {
 		this.props = props;
+	}
+	public String getTemplate() {
+		return template;
+	}
+	public void setTemplate(String template) {
+		this.template = template;
 	}
 	
 }
