@@ -1,15 +1,13 @@
 package my.pro.job.entity;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
 /**
- * 
+ *
  * @author Elkotb Zakaria
  *
  */
@@ -17,32 +15,30 @@ import javax.persistence.Table;
 @Table(name = "role")
 public class Role {
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String role;
-	@ManyToMany(mappedBy = "roles")
-	private List<Account> accounts;
+
 	public Role() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
 	public Long getId() {
-		return id;
+		return this.id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getRole() {
-		return role;
+		return this.role;
 	}
+
 	public void setRole(String role) {
 		this.role = role;
 	}
-	public List<Account> getAccounts() {
-		return accounts;
-	}
-	public void setAccounts(List<Account> accounts) {
-		this.accounts = accounts;
-	}
-	
+
 }

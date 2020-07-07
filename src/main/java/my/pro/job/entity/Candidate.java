@@ -14,8 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import my.pro.job.enumeration.Profil;
 /**
  * 
@@ -41,8 +39,7 @@ public class Candidate extends Person{
 	@ManyToOne()
 	@JoinColumn(name = "city")
 	private City city;
-	@JsonIgnoreProperties
-	@OneToOne(mappedBy = "candidate")
+	@OneToOne()
 	private Account account;
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "candidate")
 	private List<Experience> experiences;

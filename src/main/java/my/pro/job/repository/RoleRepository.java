@@ -6,4 +6,5 @@ import my.pro.job.entity.Role;
 
 public interface RoleRepository extends JpaRepository<Role, Long>{
 
+	public Role findByRole(String role);
 }

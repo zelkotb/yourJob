@@ -27,7 +27,7 @@ public class HR extends Person{
 	@JoinColumn(name = "city")
 	private City city;
 	@JsonIgnoreProperties
-	@OneToOne(mappedBy = "recruter")
+	@OneToOne()
 	private Account account;
 	@ManyToMany()
 	@JoinTable(

@@ -2,8 +2,6 @@ package my.pro.job.entity;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -44,17 +42,9 @@ public class Account implements AuditEntity{
 	@Column(length = 50,nullable = false, unique = true)
 	@Email
 	private String email;
-	
-	/**
-	 * if remove account remove person
-	 */
-	@OneToOne(cascade = CascadeType.REMOVE)
-	@JoinColumn(name = "recruter_id")
-	private HR recruter;
-	
-	@OneToOne(cascade = CascadeType.REMOVE)
-	@JoinColumn(name = "candidate_id")
-	private Candidate candidate;
+	@OneToOne(mappedBy = "account")
+	@JsonIgnore
+	private ResetPassword resetPassword;
 	
 	@ManyToMany()
 	@JoinTable(
@@ -63,10 +53,6 @@ public class Account implements AuditEntity{
 		inverseJoinColumns = @JoinColumn(name = "role_id")
 			)
 	private List<Role> roles;
-	
-	@OneToOne(mappedBy = "account")
-	@JsonIgnore
-	private ResetPassword resetPassword;
 	
 	public Account() {
 		super();
@@ -104,22 +90,6 @@ public class Account implements AuditEntity{
 		this.roles = roles;
 	}
 
-	public HR getRecruter() {
-		return recruter;
-	}
-
-	public void setRecruter(HR recruter) {
-		this.recruter = recruter;
-	}
-
-	public Candidate getCandidate() {
-		return candidate;
-	}
-
-	public void setCandidate(Candidate candidate) {
-		this.candidate = candidate;
-	}
-
 	@Override
 	public String auditDescription() {
 		return "email : "+email;
@@ -132,5 +102,5 @@ public class Account implements AuditEntity{
 	public void setResetPassword(ResetPassword resetPassword) {
 		this.resetPassword = resetPassword;
 	}
-
+	
 }

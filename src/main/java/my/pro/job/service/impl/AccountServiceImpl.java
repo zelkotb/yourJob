@@ -22,99 +22,100 @@ import my.pro.job.repository.ResetPasswordRepository;
 import my.pro.job.service.AccountService;
 import my.pro.job.service.MailService;
 import my.pro.job.util.aop.audit.Auditable;
+import my.pro.job.util.exception.CustomException;
+
 /**
- * 
+ *
  * @author Elkotb Zakaria
  *
  */
 @Service
-public class AccountServiceImpl implements AccountService{
-	
-	
+public class AccountServiceImpl implements AccountService {
+
 	@Value("${spring.mail.username}")
 	private String from;
-	
+
 	@Value("${spring.mail.sign}")
 	private String sign;
-	
+
 	@Value("${spring.mail.location}")
 	private String location;
-	
+
 	@Autowired
 	private AccountRepository accountRepository;
-	
+
 	@Autowired
 	private ResetPasswordRepository resetPasswordRepository;
-	
+
 	@Autowired
 	private MailService mailService;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder bcrypt;
 
 	@Override
 	@Transactional
-	@Auditable(action = "create à client")
-	public Account saveAccount(Account a) throws MessagingException {
-		String password = a.getPassword();
-		String encodedPassword = bcrypt.encode(a.getPassword());
-		a.setPassword(encodedPassword);
-		Account account = accountRepository.save(a);
-		MailDTO mail = MailDTO.builder().from(this.from).to(a.getEmail())
-			.subject("YourJob Welcom message").template("welcomMail")
-			.img("welcom.png").build();
-		Map<String, Object> props = new HashMap<String, Object>();
-		props.put("username", a.getUsername());
-		props.put("password", password);
-		props.put("sign", this.sign);
-		props.put("location", this.location);
-		mail.setProps(props);
-		mailService.sendMail(mail);
-		return account;
+	@Auditable(action = "create a client")
+	public Account saveAccount(Account a) throws MessagingException, CustomException {
+		if ((this.accountRepository.findByEmail(a.getEmail()) == null)
+				&& (this.accountRepository.findByUsername(a.getUsername()) == null)) {
+			String password = a.getPassword();
+			String encodedPassword = this.bcrypt.encode(a.getPassword());
+			a.setPassword(encodedPassword);
+			Account account = this.accountRepository.save(a);
+			MailDTO mail = MailDTO.builder().from(this.from).to(a.getEmail()).subject("YourJob Welcom message")
+					.template("welcomMail").img("welcom.png").build();
+			Map<String, Object> props = new HashMap<>();
+			props.put("username", a.getUsername());
+			props.put("password", password);
+			props.put("sign", this.sign);
+			props.put("location", this.location);
+			mail.setProps(props);
+			this.mailService.sendMail(mail);
+			return account;
+		} else {
+			throw new CustomException("email or username already existe");
+		}
+
 	}
 
-	
 	@Transactional
 	@Auditable(action = "update a client")
 	@Override
 	public Account updateAccount(Long id, Account a) {
 		a.setId(id);
-		return accountRepository.save(a);
+		return this.accountRepository.save(a);
 	}
-	
+
 	@Override
 	@Transactional
 	@Auditable(action = "reset password")
 	public void reset(Account account) throws MessagingException {
-		Account a = accountRepository.findByUsername(account.getUsername());
-		if(a!=null && a.getEmail().equals(account.getEmail())) {
+		Account a = this.accountRepository.findByUsername(account.getUsername());
+		if ((a != null) && a.getEmail().equals(account.getEmail())) {
 			String token = generateToken();
-			ResetPassword rp = ResetPassword.builder().account(a)
-					.token(token)
-					.validity(new Date(System.currentTimeMillis()+3600000))//1 heure
+			ResetPassword rp = ResetPassword.builder().account(a).token(token)
+					.validity(new Date(System.currentTimeMillis() + 3600000))// 1 heure
 					.build();
-			if(a.getResetPassword()!=null) {
+			if (a.getResetPassword() != null) {
 				rp.setId(a.getResetPassword().getId());
 			}
-			resetPasswordRepository.save(rp);
-			MailDTO mail = MailDTO.builder().from(this.from).to(a.getEmail())
-					.subject("Reset password verification").template("resetPassword")
-					.img("welcom.png").build();
-			Map<String, Object> props = new HashMap<String, Object>();
+			this.resetPasswordRepository.save(rp);
+			MailDTO mail = MailDTO.builder().from(this.from).to(a.getEmail()).subject("Reset password verification")
+					.template("resetPassword").img("welcom.png").build();
+			Map<String, Object> props = new HashMap<>();
 			props.put("token", token);
 			props.put("sign", this.sign);
 			props.put("location", this.location);
 			mail.setProps(props);
-			mailService.sendMail(mail);
-		}
-		else {
+			this.mailService.sendMail(mail);
+		} else {
 			throw new AccessDeniedException("username or email incorrect");
 		}
 	}
-	
+
 	private String generateToken() {
 		return UUID.randomUUID().toString();
 	}
-	
-	
+
 }
