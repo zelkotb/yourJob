@@ -2,4 +2,4 @@ spring:
   application:
     name: yourJOB
   profiles:
-    active: test
+    active: dev

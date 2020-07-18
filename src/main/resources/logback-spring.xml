@@ -36,7 +36,7 @@
         <appender-ref ref="Console" />
     </root>
  
-    <!-- Logger "bcp.socle*" au niveau DEBUG -->
+    <!-- Logger "my.pro*" au niveau DEBUG -->
     <logger name="bcp.socle" level="DEBUG" additivity="false">
         <appender-ref ref="RollingFile" />
         <appender-ref ref="Console" />

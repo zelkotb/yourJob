@@ -32,7 +32,7 @@ server:
 
 security:
   public:
-    endpoint: /my/pro/job/api-docs/**,/my/pro/job/swagger-ui/**,/my/pro/job/account/register,/my/pro/job/account/reset
+    endpoint: /my/pro/job/api-docs/**,/my/pro/job/swagger-ui/**,/my/pro/job/account/register,/my/pro/job/account/reset, /my/pro/job/account/resetToken
   jwt:
     secret: secret
 

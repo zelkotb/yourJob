@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import my.pro.job.dto.AccountDTO;
+import my.pro.job.dto.ResetPasswordDTO;
 import my.pro.job.entity.Account;
 import my.pro.job.entity.Role;
 import my.pro.job.service.AccountService;
@@ -55,10 +56,16 @@ public class AccountController {
 		return this.accountService.saveAccount(account);
 	}
 
+	@PostMapping("/resetToken")
+	@ResponseStatus(HttpStatus.CREATED)
+	public void createResetToken(@RequestBody AccountDTO a) throws MessagingException {
+		this.accountService.createResetToken(this.modelMapper.map(a, Account.class));
+	}
+
 	@PostMapping("/reset")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void reset(@RequestBody AccountDTO a) throws MessagingException {
-		this.accountService.reset(this.modelMapper.map(a, Account.class));
+	public void reset(@RequestBody ResetPasswordDTO dto) throws CustomException {
+		this.accountService.resetPassword(dto);
 	}
 
 	@ResponseStatus(HttpStatus.OK)

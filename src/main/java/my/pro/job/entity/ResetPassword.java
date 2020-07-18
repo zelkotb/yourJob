@@ -2,6 +2,7 @@ package my.pro.job.entity;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,41 +20,60 @@ import lombok.Builder;
 @Builder
 @AllArgsConstructor
 public class ResetPassword {
-	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String token;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date validity;
-	@OneToOne()
+	private boolean used;
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private Account account;
+
 	public Long getId() {
-		return id;
+		return this.id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getToken() {
-		return token;
+		return this.token;
 	}
+
 	public void setToken(String token) {
 		this.token = token;
 	}
+
 	public Date getValidity() {
-		return validity;
+		return this.validity;
 	}
+
 	public void setValidity(Date validity) {
 		this.validity = validity;
 	}
+
 	public Account getAccount() {
-		return account;
+		return this.account;
 	}
+
 	public void setAccount(Account account) {
 		this.account = account;
 	}
+
 	public ResetPassword() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public boolean isUsed() {
+		return this.used;
+	}
+
+	public void setUsed(boolean used) {
+		this.used = used;
 	}
 
 }

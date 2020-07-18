@@ -8,6 +8,7 @@ import java.util.UUID;
 import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.AccessDeniedException;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import my.pro.job.dto.MailDTO;
+import my.pro.job.dto.ResetPasswordDTO;
 import my.pro.job.entity.Account;
 import my.pro.job.entity.ResetPassword;
 import my.pro.job.repository.AccountRepository;
@@ -53,6 +55,14 @@ public class AccountServiceImpl implements AccountService {
 	@Autowired
 	private BCryptPasswordEncoder bcrypt;
 
+	@Autowired
+	private ModelMapper modelMapper;
+
+	@Override
+	public Account findByEmail(String email) {
+		return this.accountRepository.findByEmail(email);
+	}
+
 	@Override
 	@Transactional
 	@Auditable(action = "create a client")
@@ -89,14 +99,14 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	@Transactional
-	@Auditable(action = "reset password")
-	public void reset(Account account) throws MessagingException {
+	@Auditable(action = "get token for reset password")
+	public void createResetToken(Account account) throws MessagingException {
 		Account a = this.accountRepository.findByUsername(account.getUsername());
 		if ((a != null) && a.getEmail().equals(account.getEmail())) {
 			String token = generateToken();
 			ResetPassword rp = ResetPassword.builder().account(a).token(token)
 					.validity(new Date(System.currentTimeMillis() + 3600000))// 1 heure
-					.build();
+					.used(false).build();
 			if (a.getResetPassword() != null) {
 				rp.setId(a.getResetPassword().getId());
 			}
@@ -114,8 +124,62 @@ public class AccountServiceImpl implements AccountService {
 		}
 	}
 
+	@Override
+	@Transactional
+	@Auditable(action = "reset Password")
+	public void resetPassword(ResetPasswordDTO dto) throws CustomException {
+		if (validateResetPasswordProcess(dto.getPassword(), dto.getRepeatedPassword(), dto.getEmail(),
+				dto.getToken())) {
+			Account a = findByEmail(dto.getEmail());
+			a.setPassword(dto.getPassword());
+			ResetPassword rp = this.modelMapper.map(dto, ResetPassword.class);
+			rp.setValidity(a.getResetPassword().getValidity());
+			rp.setUsed(true);
+			rp.setId(a.getResetPassword().getId());
+			String encodedPassword = this.bcrypt.encode(a.getPassword());
+			a.setPassword(encodedPassword);
+			rp.setAccount(a);
+			this.resetPasswordRepository.save(rp);
+		}
+	}
+
 	private String generateToken() {
-		return UUID.randomUUID().toString();
+		return UUID.randomUUID().toString().substring(0, 8);
+	}
+
+	@Override
+	public boolean validateResetPasswordProcess(String password, String repeatPassword, String email, String token)
+			throws CustomException {
+		return (validatepassword(password, repeatPassword) && validateToken(email, token));
+	}
+
+	private boolean validatepassword(String password, String repeatPassword) throws CustomException {
+		if (password.equals(repeatPassword)) {
+			return true;
+		} else {
+			throw new CustomException("password and repeat password do not match");
+		}
+	}
+
+	private boolean validateToken(String email, String token) throws CustomException {
+		Account a = findByEmail(email);
+		ResetPassword rp = a.getResetPassword();
+		if ((rp != null) && (rp.getToken().equals(token))) {
+			double generationTime = rp.getValidity().getTime();
+			double currentTime = new Date().getTime();
+			System.err.println(generationTime - currentTime);
+			if ((generationTime - currentTime) >= 1800000) {// 30 min token validity
+				if (rp.isUsed() == false) {
+					return true;
+				} else {
+					throw new CustomException("this token is already used");
+				}
+			} else {
+				throw new CustomException("this token is expired");
+			}
+		} else {
+			throw new CustomException("this token is not valid");
+		}
 	}
 
 }
