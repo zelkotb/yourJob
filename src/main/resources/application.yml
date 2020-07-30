@@ -3,7 +3,7 @@ spring:
     name: yourJOB
   datasource:
     username: root
-    password: user
+    password: mysql
     testwhileIdle: true
     validationQuery: SELECT 1
   jpa:

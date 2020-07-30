@@ -1,12 +1,10 @@
 ######### MongoDB && MySQL #########
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3307/yourjob?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/yourjob?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
   data:
     mongodb:
       host: localhost
       port: 27017
       database: auditDB
-      repositories:
-        enabled: true
 ######### MongoDB #########
